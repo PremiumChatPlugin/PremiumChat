@@ -1,0 +1,120 @@
+# Welcome to the PremiumChat Configuration
+# This is quite a complicated configuration if you need help with it, you can contact me on Discord
+# And I can help you create a configuration and customize it to your needs!
+# 
+# All chat colors can be found on https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/ChatColor.html
+
+# Permissions to use each chat color, each color can have unlimited permissions, and multiple chat colors can have the same
+# permission(s), a list of chat colors can be found at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/ChatColor.html
+chatcolorpermissions:
+  RED:
+  - chatcolor.staff
+  DARK_RED:
+  - chatcolor.staff
+  GREEN:
+  - chatcolor.green
+
+# The default chat color
+defaultchatcolor: WHITE
+
+autobroadcaster:
+  # Whether the auto broadcaster is enabled or not
+  enabled: false
+  # The frequency (in seconds) that the plugin broadcasts a random message from the list below
+  frequency: 300
+  messages:
+  - '&c&lTIP &6&l>> &cDid you know that you can buy ranks and cool perks to support
+    the server at &6/buy&c?'
+
+# All formats (chat/msg)
+formats:
+  # All chat formats
+  chat:
+    # This is the default chat format, you must at all times have a default chat format
+    default:
+      # The priority, if the user has permission for multiple chat formats, they will be assigned the chat format with the highest priority
+      priority: 1
+      # The permission for this chat format
+      permission: chatformat.default
+      # The default chat color for this chat format
+      color: WHITE
+      # Each section is a put after each other, but will be parsed separately, meaning each chat section can have different hover/click events
+      sections:
+        '1':
+          text: '&7[%vault_prefix%&7]'
+          # This section will only show if the SENDER has the required permission, you can leave this part out of the section, and everyone will see it (Added in V1.4)
+          permission: chatformats.default.prefix
+          hover: |-
+            &cPrefix: &7%vault_prefix%
+            &cRank: &7%vault_rank%
+        '2':
+          text: '&f%essentials_nickname%'
+          hover: |-
+            &cReal Name: &7%player_name%
+            &cRank: &7%vault_rank%
+            &cMoney: &7$%vault_eco_balance_commas%
+
+            &7Click to message this user
+          click: '/reply ' # If the user clicks this message, /reply will pop up in their chat
+        '3':
+          text: ': '
+        '4':
+          text: '%message%'
+  msg:
+    default:
+      priority: 1
+      permission: msgformat.default
+      color: WHITE
+      sections:
+        sender:
+          '1':
+            text: '&7Me'
+          '2':
+            text: '&b&l >> '
+          '3':
+            text: '%rel_vault_prefix% %rel_essentials_nickname%'
+          '4':
+            text: '&f: '
+          '5':
+            text: '&f%message%'
+        receiver:
+          '1':
+            text: '%rel_vault_prefix% %rel_essentials_nickname%'
+            click: '/reply '
+            hover: '&7Click to reply to this message'
+          '2':
+            text: '&b&l >> '
+          '3':
+            text: '&7Me'
+          '4':
+            text: '&f: '
+          '5':
+            text: '&f%message%'
+channels:
+  staff:
+    name: '&7Staff'
+    color: AQUA
+    # Channel type, valid channel types are NORMAL, LOCAL and WORLD, NORMAL does not have any settings, while LOCAL and WORLD requires settings as shown below
+    type: NORMAL
+    # If the player has any of these permissions, they will be able to see/write in the channel
+    permission: chatchannels.staff
+    # If the player tries to interact with this channel, but does not have permission, they'll see this message
+    no_permission_message: '&cYou must have at least staff rank &7[&e&lHelper&7] &cto
+      access this channel'
+    # These sections are the same as normal chat format sections and have all the same options
+    sections:
+      channel:
+        text: '&7[&c&lStaff&7Chat]'
+      sender:
+        text: '%vault_prefix%%player_name%'
+        hover: |-
+          &3Rank: &b%vault_rank%
+          &3Money: &b%vault_eco_balance_commas%
+      separator:
+        text: ': '
+      message:
+        text: '%message%'
+    options: # Options for LOCAL or WORLD channels, these aren't used for this example channel, but are here for documentation purposes
+      bypassPermissions: # In case of LOCAL or WORLD channels, players with this permission will be able to see all messages in this channel regardless of if they are in the same world/radius to see it
+      - channel.bypass
+      radius: 75 # LOCAL channels are chat radius channels, and this is where you set the radius
